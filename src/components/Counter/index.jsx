@@ -56,7 +56,7 @@ class Counter extends Component {
   }
 }
 Counter.propTypes = {
-  step: PropTypes.number
+  step: PropTypes.number.isRequired
 };
 Counter.defaultProps = {
   step: 1
