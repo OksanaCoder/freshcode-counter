@@ -11,12 +11,17 @@ class Counter extends Component {
       autoClickTime: 0
     };
     this.idInterval = null;
+    this.autoClickTimeout = null;
   }
   componentDidMount = () => {
-    this.idInterval = setInterval(this.handleAutoClick(), 1000);
+    this.autoClickTimeout = setTimeout(() => {
+      clearInterval(this.idInterval);
+    }, 30000);
+    this.idInterval = setInterval(this.handleAutoClick, 1000);
   };
   componentWillUnmount = () => {
     clearInterval(this.idInterval);
+    clearTimeout(this.autoClickTimeout);
   };
   handleCount = () => {
     this.setState((state, props) => {
@@ -32,15 +37,12 @@ class Counter extends Component {
     });
   };
   handleAutoClick = () => {
-    if (this.state.autoClickTime >= 30) {
-      // Якщо пройшло 30 секунд, очищуємо інтервал autoClick
-      clearInterval(this.idInterval);
-    } else if (this.idInterval === null) {
-      this.idInterval = setInterval(this.handleCount, 1000);
-    }
+    this.setState((state) => ({
+      autoClickTime: state.autoClickTime + 1
+    }));
   };
   render() {
-    const { count, isAdd } = this.state;
+    const { count, isAdd, autoClickTime } = this.state;
     const { step } = this.props;
     return (
       <div>
@@ -51,6 +53,7 @@ class Counter extends Component {
         </button>
         <button onClick={this.handleChangeMode}>переключити команду</button>
         <button onClick={this.handleAutoClick}>autoClick</button>
+        <h3>Autoclick works: {autoClickTime} sec</h3>
       </div>
     );
   }
