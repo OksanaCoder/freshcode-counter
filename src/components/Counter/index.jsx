@@ -58,4 +58,7 @@ class Counter extends Component {
 Counter.propTypes = {
   step: PropTypes.number
 };
+Counter.defaultProps = {
+  step: 1
+};
 export default Counter;
