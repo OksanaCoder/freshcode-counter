@@ -12,16 +12,19 @@ class Counter extends Component {
     };
     this.idInterval = null;
     this.autoClickTimeout = null;
+    this.idIntervalCount = null;
   }
   componentDidMount = () => {
     this.autoClickTimeout = setTimeout(() => {
       clearInterval(this.idInterval);
     }, 30000);
     this.idInterval = setInterval(this.handleAutoClick, 1000);
+    this.idIntervalCount = setInterval(this.handleCount, 1000);
   };
   componentWillUnmount = () => {
     clearInterval(this.idInterval);
     clearTimeout(this.autoClickTimeout);
+    clearInterval(this.idIntervalCount);
   };
   handleCount = () => {
     this.setState((state, props) => {
