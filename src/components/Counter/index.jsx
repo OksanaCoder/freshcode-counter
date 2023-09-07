@@ -17,7 +17,10 @@ class Counter extends Component {
   componentDidMount = () => {
     this.autoClickTimeout = setTimeout(() => {
       clearInterval(this.idInterval);
-    }, 30000);
+      clearInterval(this.idIntervalCount);
+      this.setState({ count: 0 });
+    }, 30001);
+
     this.idInterval = setInterval(this.handleAutoClick, 1000);
     this.idIntervalCount = setInterval(this.handleCount, 1000);
   };
